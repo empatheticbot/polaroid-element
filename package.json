@@ -1,0 +1,67 @@
+{
+  "name": "@empatheticbot/template-element",
+  "version": "0.1.0",
+  "description": "Template for new custom elements.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "lint": "eslint . --ext .js,.ts && tsc --noEmit",
+    "prebuild": "npm run clean && npm run lint && mkdir dist",
+    "build": "tsc && rollup -c",
+    "prepublishOnly": "npm run build",
+    "start": "serve . -p 3000",
+    "test": "karma start test/karma.config.cjs",
+    "update": "npm-check -u"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://sledsworth@github.com/empatheticbot/date-element.git"
+  },
+  "keywords": [
+    "custom",
+    "elements",
+    "web",
+    "components",
+    "html",
+    "javascript"
+  ],
+  "author": "Steve Ledsworth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/empatheticbot/template-element/issues"
+  },
+  "homepage": "https://github.com/empatheticbot/template-element#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.0.0",
+    "chai": "^4.3.4",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-custom-elements": "0.0.4",
+    "eslint-plugin-github": "4.1.5",
+    "karma": "^6.3.9",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.1.0",
+    "karma-mocha": "^2.0.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "mocha": "^8.4.0",
+    "npm-check": "5.9.2",
+    "rollup": "2.62.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "serve": "13.0.2",
+    "ts-node": "10.4.0",
+    "typescript": "4.5.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "eslintIgnore": [
+    "dist/"
+  ]
+}
