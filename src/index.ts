@@ -1,1 +1,1 @@
-import './templateCustomElement'
+import './PolaroidImageElement'

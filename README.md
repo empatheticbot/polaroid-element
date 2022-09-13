@@ -1,11 +1,11 @@
-# template-element
+# 🎑 Polaroid Image Element
 
-Custom Element template project.
+Wraps image in polaroid style border and allows for image to be rotated and inline with text appropriately wrapping around the image.
 
 ## Installation
 
 ```bash
-$ npm install --save @empatheticbot/template-element
+npm install --save @empatheticbot/polaroid-image-element
 ```
 
 ## Usage
@@ -15,13 +15,13 @@ $ npm install --save @empatheticbot/template-element
 **Import as ES module:**
 
 ```javascript
-import '@empatheticbot/template-element'
+import '@empatheticbot/polaroid-image-element'
 ```
 
 **With a script tag:**
 
 ```html
-<script type="module" src="./node_modules/@empatheticbot/template-element/dist/index.js">
+<script type="module" src="./node_modules/@empatheticbot/polaroid-element/dist/index.js">
 ```
 
 _Note that the path is relative to the root of your project, this may not be the case in your application, so check to make sure your path is correct and the module is being served._
@@ -29,30 +29,31 @@ _Note that the path is relative to the root of your project, this may not be the
 ### Markup
 
 ```html
-<template-element></template-element>
+<polaroid-image
+ rotate="13"
+ align="right">
+ <img 
+  alt="Something descriptive about my image." 
+  src="..." 
+  height="400x" 
+  width="600px" />
+</polaroid-image>
 ```
 
 ### Attributes
 
--
-
-### Events
-
--
+| Name | Description | Type | Default |
+| ----- | ---------- | ---- | ------ |
+| `align` | Where the image should be displayed in the containing element | `right \| left` | `right` |
+| `rotate` | The angle, in degrees, the image should be rotated | `number` | `0` |
 
 ## Development
 
 To install dependencies and build the custom element:
 
-```
+```bash
 npm install
 npm run build
 ```
 
-The resulting built custom element can be found in the `dist` directory. From here you can start a simple HTTP server with `npm run start` and navigate to http://localhost:3000/examples/. Note that if you make changes to source you will need to run `npm run build` again and refresh the page.
-
-Tests should be written and live next to the source code it tests. The file name should match that of what it tests with an extension of `.test.ts`. Tests can be ran with `npm run test`.
-
-## Notes
-
-- Special thanks to [Github Custom Element Boilerplate](https://github.com/github/custom-element-boilerplate) project for a lot of inspiration with this template.
+The resulting built custom element can be found in the `dist` directory. From here you can start a simple HTTP server with `npm run start` and navigate to <http://localhost:3000/examples/>. Note that if you make changes to source you will need to run `npm run build` again and refresh the page.
