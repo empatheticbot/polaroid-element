@@ -51,7 +51,7 @@ export function updateStyles(
   img: HTMLImageElement,
   rotate: number,
   float?: Alignment,
-  offset = 24
+  offset = 0
 ): void {
   const realImgHeight = img.offsetHeight
   const triangleSideLengths = getTriangleSideLengths(rotate, realImgHeight)

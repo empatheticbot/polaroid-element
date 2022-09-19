@@ -5,9 +5,10 @@ import { Alignment, updateStyles } from './utils'
 export class PolaroidImageElement extends HTMLElement {
   align?: Alignment = undefined
   rotate = 0
+  offset = 24
 
   static get observedAttributes(): string[] {
-    return ['rotate', 'align']
+    return ['rotate', 'align', 'offset']
   }
 
   connectedCallback(): void {
@@ -20,6 +21,10 @@ export class PolaroidImageElement extends HTMLElement {
     if (r) {
       this.rotate = parseFloat(r)
     }
+    const o = this.getAttribute('offset')
+    if (o) {
+      this.offset = parseInt(o)
+    }
     // new MutationObserver(() => {
     // eslint-disable-next-line custom-elements/no-dom-traversal-in-connectedcallback
     const img = this.querySelector('img')
@@ -28,7 +33,7 @@ export class PolaroidImageElement extends HTMLElement {
       throw Error(`'img' element is required to be passed to polaroid-image`)
     }
 
-    updateStyles(this, img, this.rotate, this.align)
+    updateStyles(this, img, this.rotate, this.align, this.offset)
   }
 
   disconnectedCallback(): void {}
