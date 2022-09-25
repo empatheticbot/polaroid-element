@@ -16,13 +16,13 @@
 		img {
 			max-width: 400px;
 			/* float: right; */
-			margin: 0 1rem;
+			/* margin: 0 1rem; */
 			/* shape-outside: polygon(0 100%, 40% 0, 100% 100%); */
 			/* transform-origin: 0 100%; */
 			/* transform: rotate(18deg); */
-			padding: 1rem 1rem 3rem 1rem;
+			/* padding: 1rem 1rem 3rem 1rem; */
 			border: 3px solid black;
-			background: white
+			/* background: white */
 		}
 
 		div {
@@ -61,7 +61,7 @@
 
 <body>
 	<article>
-		<polaroid-image offset="100" align="right" rotate="13">
+		<polaroid-image caption="some caption" offset="100" align="right" rotate="13">
 			<img height="540px" width="400px"
 				src="https://images.unsplash.com/photo-1660230424802-922a31622c65?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjE4ODI1MjE&ixlib=rb-1.2.1&q=80">
 		</polaroid-image>
@@ -100,7 +100,8 @@
 	</article>
 
 	<article>
-		<polaroid-image align="left" rotate="-15">
+		<polaroid-image align="left" rotate="-15"
+			caption="This is a long caption that will probably wrap, well that is the plan. Who knows!">
 			<img height="540px" width="400px"
 				src="https://images.unsplash.com/photo-1660230424802-922a31622c65?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjE4ODI1MjE&ixlib=rb-1.2.1&q=80">
 		</polaroid-image>

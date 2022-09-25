@@ -48,7 +48,7 @@ function getNegativeShapeOutsidePolygon({
 
 export function updateStyles(
   rootEl: HTMLElement,
-  img: HTMLImageElement,
+  img: HTMLElement,
   rotate: number,
   float?: Alignment,
   offset = 0
