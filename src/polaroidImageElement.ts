@@ -5,12 +5,17 @@ import { Alignment, updateStyles } from './utils'
 export class PolaroidImageElement extends HTMLElement {
   align?: Alignment = undefined
   rotate = 0
+  beginRotation = 0
+  endRotation = 13
+  beginWidth = 600
+  endWidth = 1200
   offset = 24
   borderThickness = 3
   borderColor = 'black'
   caption?: string | null
   wrapperElement: HTMLDivElement
   captionElement: HTMLParagraphElement
+  resizeObserver?: ResizeObserver
   // eslint-disable-next-line custom-elements/no-constructor
   constructor() {
     super()
@@ -19,12 +24,15 @@ export class PolaroidImageElement extends HTMLElement {
     this.wrapperElement = document.createElement('div')
     this.wrapperElement.style.padding = '1rem'
     this.wrapperElement.style.background = 'white'
+    this.wrapperElement.style.backgroundClip = 'padding-box'
     this.wrapperElement.style.border = `${this.borderThickness}px solid ${this.borderColor}`
 
     this.wrapperElement.style.display = 'flex'
     this.wrapperElement.style.flexDirection = 'column'
     this.wrapperElement.style.gap = '.5rem'
     this.wrapperElement.style.alignItems = 'center'
+
+    this.wrapperElement.setAttribute('part', 'container')
 
     this.captionElement = document.createElement('p')
     this.captionElement.style.textAlign = 'center'
@@ -37,17 +45,57 @@ export class PolaroidImageElement extends HTMLElement {
   }
 
   static get observedAttributes(): string[] {
-    return ['rotate', 'align', 'offset', 'caption']
+    return [
+      'begin-rotation',
+      'end-rotation',
+      'begin-width',
+      'end-width',
+      'align',
+      'offset',
+      'caption',
+    ]
   }
 
   connectedCallback(): void {
     this.update()
+    this.resizeObserver = new ResizeObserver((entries) => {
+      const body = entries[0]
+      if (body) {
+        const width = body.contentRect.width
+        const beginRotation = this.getAttribute('begin-rotation')
+        const endRotation = this.getAttribute('end-rotation')
+        const beginWidth = this.getAttribute('begin-wdith')
+        const endWidth = this.getAttribute('end-width')
+        if (beginRotation) {
+          this.beginRotation = parseFloat(beginRotation)
+        }
+        if (endRotation) {
+          this.endRotation = parseFloat(endRotation)
+        }
+        if (beginWidth) {
+          this.beginWidth = parseFloat(beginWidth)
+        }
+        if (endWidth) {
+          this.endWidth = parseFloat(endWidth)
+        }
+        if (width < this.beginWidth) {
+          this.update(this.beginRotation)
+        } else if (width > this.endWidth) {
+          this.update(this.endRotation)
+        } else {
+          const ratio =
+            (width - this.beginWidth) / (this.endWidth - this.beginWidth)
+          this.update(this.endRotation * ratio)
+        }
+      }
+    })
+    this.resizeObserver.observe(document.body)
   }
 
-  update(): void {
+  update(rotation?: number): void {
     this.align = this.getAttribute('align') as Alignment
     this.caption = this.getAttribute('caption')
-
+    this.rotate = rotation || 0
     const r = this.getAttribute('rotate')
     if (r) {
       this.rotate = parseFloat(r)
@@ -75,14 +123,15 @@ export class PolaroidImageElement extends HTMLElement {
     this.captionElement.textContent = this.caption
   }
 
-  disconnectedCallback(): void {}
+  disconnectedCallback(): void {
+    this.resizeObserver?.disconnect()
+  }
 
   attributeChangedCallback(
     attrName: string,
     oldValue: string,
     newValue: string
   ): void {
-    console.log(attrName)
     this.update()
   }
 }
