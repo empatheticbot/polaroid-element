@@ -1,6 +1,6 @@
 {
 	"name": "@empatheticbot/polaroid-image-element",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"description": "Wraps image in polaroid style border and allows for image to be rotated and inline with text appropriately wrapping around the image.",
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
