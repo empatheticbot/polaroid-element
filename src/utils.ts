@@ -64,17 +64,24 @@ export function updateStyles(
     rootEl.style.display = 'grid'
     rootEl.style.justifyContent = 'center'
     rootEl.style.alignItems = 'center'
-    rootEl.style.shapeMargin = '1rem'
-    rootEl.style.height = `calc(${height}px + ${offset * 2}px)`
-    rootEl.style.width = `calc(${width}px + ${offset * 2}px)`
-    rootEl.style.shapeOutside =
-      rotate >= 0
-        ? getShapeOutsidePolygon({ ...triangleSideLengths, offset })
-        : getNegativeShapeOutsidePolygon({ ...triangleSideLengths, offset })
+    if (float !== 'none') {
+      rootEl.style.shapeMargin = '1rem'
+      rootEl.style.height = `calc(${height}px + ${offset * 2}px)`
+      rootEl.style.width = `calc(${width}px + ${offset * 2}px)`
+      rootEl.style.shapeOutside =
+        rotate >= 0
+          ? getShapeOutsidePolygon({ ...triangleSideLengths, offset })
+          : getNegativeShapeOutsidePolygon({ ...triangleSideLengths, offset })
+    } else {
+      rootEl.style.shapeMargin = '0'
+      rootEl.style.height = 'initial'
+      rootEl.style.width = 'initial'
+      rootEl.style.shapeOutside = 'none'
+    }
     if (float) {
       rootEl.style.float = float
     }
   }
 }
 
-export type Alignment = 'left' | 'right' | null | undefined
+export type Alignment = 'left' | 'right' | 'none' | null | undefined

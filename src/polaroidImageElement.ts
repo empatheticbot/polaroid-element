@@ -61,41 +61,33 @@ export class PolaroidImageElement extends HTMLElement {
     this.resizeObserver = new ResizeObserver((entries) => {
       const body = entries[0]
       if (body) {
-        const width = body.contentRect.width
-        const beginRotation = this.getAttribute('begin-rotation')
-        const endRotation = this.getAttribute('end-rotation')
-        const beginWidth = this.getAttribute('begin-wdith')
-        const endWidth = this.getAttribute('end-width')
-        if (beginRotation) {
-          this.beginRotation = parseFloat(beginRotation)
-        }
-        if (endRotation) {
-          this.endRotation = parseFloat(endRotation)
-        }
-        if (beginWidth) {
-          this.beginWidth = parseFloat(beginWidth)
-        }
-        if (endWidth) {
-          this.endWidth = parseFloat(endWidth)
-        }
-        if (width < this.beginWidth) {
-          this.update(this.beginRotation)
-        } else if (width > this.endWidth) {
-          this.update(this.endRotation)
-        } else {
-          const ratio =
-            (width - this.beginWidth) / (this.endWidth - this.beginWidth)
-          this.update(this.endRotation * ratio)
-        }
+        this.update()
       }
     })
     this.resizeObserver.observe(document.body)
   }
 
-  update(rotation?: number): void {
+  update(): void {
     this.align = this.getAttribute('align') as Alignment
     this.caption = this.getAttribute('caption')
-    this.rotate = rotation || 0
+    this.rotate = 0
+    const width = window.innerWidth
+    const beginRotation = this.getAttribute('begin-rotation')
+    const endRotation = this.getAttribute('end-rotation')
+    const beginWidth = this.getAttribute('begin-width')
+    const endWidth = this.getAttribute('end-width')
+    if (beginRotation) {
+      this.beginRotation = parseFloat(beginRotation)
+    }
+    if (endRotation) {
+      this.endRotation = parseFloat(endRotation)
+    }
+    if (beginWidth) {
+      this.beginWidth = parseFloat(beginWidth)
+    }
+    if (endWidth) {
+      this.endWidth = parseFloat(endWidth)
+    }
     const r = this.getAttribute('rotate')
     if (r) {
       this.rotate = parseFloat(r)
@@ -103,6 +95,17 @@ export class PolaroidImageElement extends HTMLElement {
     const o = this.getAttribute('offset')
     if (o) {
       this.offset = parseInt(o)
+    }
+
+    if (width < this.beginWidth) {
+      this.rotate = this.beginRotation
+      this.align = 'none'
+    } else if (width > this.endWidth) {
+      this.rotate = this.endRotation
+    } else {
+      const ratio =
+        (width - this.beginWidth) / (this.endWidth - this.beginWidth)
+      this.rotate = this.endRotation * ratio
     }
     // new MutationObserver(() => {
     // eslint-disable-next-line custom-elements/no-dom-traversal-in-connectedcallback
